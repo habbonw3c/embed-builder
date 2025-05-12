@@ -4,6 +4,12 @@ window.inIframe ??= top !== self;
 window.addEventListener("message", function(event) {
     if (event.data === "requestData") {
         event.source.postMessage(window.json, event.origin);
+    } else if (event.data.type === "json") {
+      try {
+        window.json = JSON.parse(event.data.json);
+      } catch (error) {
+        alert("Invalid JSON received:", error);
+      }
     }
 });
 
